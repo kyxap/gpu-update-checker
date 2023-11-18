@@ -1,31 +1,30 @@
 package github.kyxap.com.http;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import github.kyxap.com.utils.Buffer;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class HttpGetExample {
-    public static void main(String[] args) {
+public class HttpWorker {
+    public static String get(String uri) {
         try {
-            URL url = new URL("https://api.example.com/data");
+            URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
+            String htmlResponse = Buffer.readStream(connection.getInputStream());
+
             // Read the response
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                String line;
-                StringBuilder response = new StringBuilder();
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                System.out.println("Response: " + response.toString());
-            }
+            //System.out.println("Response: " + htmlResponse);
 
             connection.disconnect();
+
+            return htmlResponse;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
 
