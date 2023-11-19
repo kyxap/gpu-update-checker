@@ -15,7 +15,7 @@ public class HttpWorker {
             String htmlResponse = Buffer.readStream(connection.getInputStream());
 
             // Read the response
-            //System.out.println("Response: " + htmlResponse);
+            //Logger.log("Response: " + htmlResponse);
 
             connection.disconnect();
 

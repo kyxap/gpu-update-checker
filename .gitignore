@@ -9,6 +9,10 @@ build/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+# seems like no need in that
+.idea/uiDesigner.xml
+# same here, maybe for default worskapce
+.idea/workspace.xml
 *.iws
 *.iml
 *.ipr
@@ -40,3 +44,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# app specific
+debug.log
