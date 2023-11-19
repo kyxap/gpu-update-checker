@@ -26,11 +26,6 @@ public class CmdWorker {
             // Wait for the process to complete
             int exitCode = process.waitFor();
 
-            // Print the output and exit code
-            //Logger.log("Command Output:" + output);
-            //Logger.log("Exit Code: " + exitCode);
-
-
             return output;
 
         } catch (IOException | InterruptedException e) {
@@ -39,7 +34,6 @@ public class CmdWorker {
 
         return "Issue with your command";
     }
-
 
     private static String getInstalledDriverVersion(InputStream inputStream) throws IOException {
         final String lineMustContain = "Driver Version";
