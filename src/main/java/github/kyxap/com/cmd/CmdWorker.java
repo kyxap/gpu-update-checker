@@ -1,5 +1,7 @@
 package github.kyxap.com.cmd;
 
+import github.kyxap.com.utils.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,8 +27,8 @@ public class CmdWorker {
             int exitCode = process.waitFor();
 
             // Print the output and exit code
-            //System.out.println("Command Output:\n" + output);
-            //System.out.println("Exit Code: " + exitCode);
+            //Logger.log("Command Output:" + output);
+            //Logger.log("Exit Code: " + exitCode);
 
 
             return output;
@@ -47,7 +49,7 @@ public class CmdWorker {
                 if (line.contains(lineMustContain)) {
 
                     String verOnly = line.substring(line.lastIndexOf(lineMustContain) + lineMustContain.length() + 2, line.indexOf("  ", line.indexOf(lineMustContain)));
-                    System.out.printf("Installed version %s\n", verOnly);
+                    Logger.log(String.format("Installed version %s", verOnly));
 
                     return verOnly;
                 }

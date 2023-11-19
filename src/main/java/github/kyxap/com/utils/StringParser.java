@@ -8,7 +8,7 @@ public class StringParser {
         int strIndex2 = subRez.indexOf(secondLookup);
         String verParsed = subRez.substring(strIndex2 + secondLookup.length(), subRez.indexOf("</td>", strIndex2));
 
-        System.out.printf("Latest extracted version from html: %s\n", verParsed);
+        Logger.log(String.format("Latest extracted version from html: %s", verParsed));
         return verParsed;
     }
 }
