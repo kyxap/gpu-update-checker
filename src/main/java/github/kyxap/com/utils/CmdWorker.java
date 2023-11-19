@@ -1,4 +1,4 @@
-package github.kyxap.com.cmd;
+package github.kyxap.com.utils;
 
 import github.kyxap.com.utils.Logger;
 

@@ -4,10 +4,10 @@ import static github.kyxap.com.config.AppConfig.getProperty;
 import static github.kyxap.com.config.AppConfig.loadProperties;
 import github.kyxap.com.config.ConfigProps;
 import github.kyxap.com.utils.Logger;
-import github.kyxap.com.cmd.CmdWorker;
+import github.kyxap.com.utils.CmdWorker;
 import static github.kyxap.com.gui.windows.PopUpWorker.openAboutWindow;
 import static github.kyxap.com.gui.windows.PopUpWorker.popUpInfo;
-import github.kyxap.com.http.HttpWorker;
+import github.kyxap.com.utils.HttpWorker;
 import static github.kyxap.com.utils.Scheduler.scheduleVersionCheck;
 import github.kyxap.com.utils.StringParser;
 
