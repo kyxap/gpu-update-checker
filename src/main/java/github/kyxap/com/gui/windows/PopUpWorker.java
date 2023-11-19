@@ -1,6 +1,6 @@
 package github.kyxap.com.gui.windows;
 
-import github.kyxap.com.cmd.CmdWorker;
+import github.kyxap.com.utils.CmdWorker;
 import github.kyxap.com.gui.tray.DriverUpdateChecker;
 
 import java.awt.*;
