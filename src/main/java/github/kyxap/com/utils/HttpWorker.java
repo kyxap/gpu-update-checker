@@ -1,6 +1,4 @@
-package github.kyxap.com.http;
-
-import github.kyxap.com.utils.Buffer;
+package github.kyxap.com.utils;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
