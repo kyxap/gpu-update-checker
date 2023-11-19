@@ -1,7 +1,10 @@
 package github.kyxap.com.gui.tray;
 
+import static github.kyxap.com.config.AppConfig.getProperty;
+import static github.kyxap.com.config.AppConfig.loadProperties;
+import github.kyxap.com.config.ConfigProps;
+import github.kyxap.com.utils.Logger;
 import github.kyxap.com.cmd.CmdWorker;
-import github.kyxap.com.gui.windows.PopUpWorker;
 import static github.kyxap.com.gui.windows.PopUpWorker.openAboutWindow;
 import static github.kyxap.com.gui.windows.PopUpWorker.popUpInfo;
 import github.kyxap.com.http.HttpWorker;
@@ -18,6 +21,7 @@ import java.awt.MenuItem;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * https://www.nvidia.com/Download/Find.aspx?lang=en-us
@@ -31,11 +35,18 @@ public class DriverUpdateChecker {
     // Load an image for the tray icon
     static Image TRAY_ICON = Toolkit.getDefaultToolkit().getImage(DriverUpdateChecker.class.getClassLoader().getResource("img/icon.png"));
 
-    private static String uri = "https://www.nvidia.com/Download/processFind.aspx?psid=127&pfid=995&osid=135&lid=1&whql=1&lang=en-us&ctk=0&qnfslb=00&dtcid=1";
-    static PopUpWorker popUpWorker;
+    private static String uri;
+    public static void main(String[] args) throws IOException {
+        // Load properties
+        loadProperties();
+        // Access properties
+        uri = getProperty(ConfigProps.App.URI_TO_GET_DATA_FROM.getDescription());
+        boolean debugEnabled = Boolean.parseBoolean(getProperty(ConfigProps.LoggerSettings.DEBUG.getDescription()));
+        boolean devOutputEnabled = Boolean.parseBoolean(getProperty(ConfigProps.LoggerSettings.DEV_OUTPUT.getDescription()));
+        Logger.setLoggerOutput(debugEnabled, devOutputEnabled);
 
-    public static void main(String[] args) {
-        popUpWorker = new PopUpWorker();
+        Logger.log("URI which will be using to parse data from: " + uri);
+
         if (SystemTray.isSupported()) {
             DriverUpdateChecker trayExample = new DriverUpdateChecker();
             trayExample.createSystemTray();
@@ -43,7 +54,7 @@ public class DriverUpdateChecker {
             // TODO: make sure scheduler works without tray
             String msg = "SystemTray is not supported on this platform, but scheduler is started";
             popUpInfo(msg);
-            System.out.println(msg);
+            Logger.log(msg);
         }
         scheduleVersionCheck();
     }
@@ -60,7 +71,7 @@ public class DriverUpdateChecker {
             trayIcon.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // Your action on double-click
-                    System.out.println("Tray icon clicked");
+                    Logger.log("Tray icon clicked");
                 }
             });
 
@@ -80,8 +91,8 @@ public class DriverUpdateChecker {
         checkUpdatesItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Handle the "Check Driver Updates" action
-                System.out.println("Check Driver Updates clicked");
-                if (!isUpdateAvailable()) {
+                Logger.log("Check Driver Updates clicked");
+                if (isNewUpdateAvailable()) {
                     popUpInfo( "New driver version updated is available");
                 } else {
                     popUpInfo( "You are using latest version, no updates available");
@@ -95,7 +106,7 @@ public class DriverUpdateChecker {
         aboutItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Handle the "About" action
-                System.out.println("About clicked");
+                Logger.log("About clicked");
                 openAboutWindow();
             }
         });
@@ -117,11 +128,17 @@ public class DriverUpdateChecker {
         return popupMenu;
     }
 
-    public static boolean isUpdateAvailable() {
-        String latestVer = StringParser.extractVersionFromHtlmString(HttpWorker.get(uri));
-        String installedVer = CmdWorker.runCmd("nvidia-smi");
-        String printInfo = "Needs update: ";
-        System.out.println(printInfo + !installedVer.equals(latestVer));
-        return installedVer.equals(latestVer);
+    public static boolean isNewUpdateAvailable() {
+        if (uri != null) {
+            String latestVer = StringParser.extractVersionFromHtlmString(HttpWorker.get(uri));
+            String installedVer = CmdWorker.runCmd("nvidia-smi");
+            String printInfo = "Needs update: ";
+            Logger.log(printInfo + !installedVer.equals(latestVer));
+
+            return !installedVer.equals(latestVer);
+        } else {
+            Logger.log("uri is null at the start");
+            return false;
+        }
     }
 }
