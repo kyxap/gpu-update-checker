@@ -11,8 +11,7 @@ import github.kyxap.com.utils.HttpWorker;
 import static github.kyxap.com.utils.Scheduler.scheduleVersionCheck;
 import github.kyxap.com.utils.StringParser;
 
-import java.awt.Image;
-import java.awt.Toolkit;
+import javax.imageio.ImageIO;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.PopupMenu;
@@ -21,7 +20,9 @@ import java.awt.MenuItem;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * https://www.nvidia.com/Download/Find.aspx?lang=en-us
@@ -33,7 +34,9 @@ import java.io.IOException;
 public class DriverUpdateChecker {
 
     // Load an image for the tray icon
-    static Image TRAY_ICON = Toolkit.getDefaultToolkit().getImage(DriverUpdateChecker.class.getClassLoader().getResource("img/icon.png"));
+    static URL TRAY_ICON = DriverUpdateChecker.class.getClassLoader().getResource("img/icon_v2a.png");
+
+    public static BufferedImage TRAY_ICON_IMG;
 
     private static String uri;
     public static void main(String[] args) throws IOException {
@@ -65,7 +68,9 @@ public class DriverUpdateChecker {
             SystemTray systemTray = SystemTray.getSystemTray();
 
             // Create a tray icon
-            TrayIcon trayIcon = new TrayIcon(TRAY_ICON, "GPU Update Checker", setPopupMenu());
+            TRAY_ICON_IMG = ImageIO.read(TRAY_ICON);
+            TrayIcon trayIcon = new TrayIcon(TRAY_ICON_IMG, "GPU Update Checker", setPopupMenu());
+            trayIcon.setImageAutoSize(true);
 
             // Set default action for double-click
             trayIcon.addActionListener(new ActionListener() {
@@ -80,6 +85,8 @@ public class DriverUpdateChecker {
 
         } catch (AWTException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
