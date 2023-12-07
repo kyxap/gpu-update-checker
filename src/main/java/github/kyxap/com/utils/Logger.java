@@ -1,11 +1,11 @@
 package github.kyxap.com.utils;
 
-import static github.kyxap.com.utils.DateAndTime.getCurDateTime;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import static github.kyxap.com.utils.DateAndTime.getCurDateTime;
 
 public class Logger {
 
@@ -13,15 +13,15 @@ public class Logger {
     private static boolean debug = true;
     private static boolean devOutput = true;
 
-    public static void log(String message) {
+    public static void log(final String message) {
         if (debug) {
-            try (FileWriter f = new FileWriter(LOG_FILE_PATH, true);
-                 BufferedWriter b = new BufferedWriter(f);
-                 PrintWriter p = new PrintWriter(b)) {
+            try (final FileWriter f = new FileWriter(LOG_FILE_PATH, true);
+                 final BufferedWriter b = new BufferedWriter(f);
+                 final PrintWriter p = new PrintWriter(b)) {
 
                 p.println(formatted(message));
 
-            } catch (IOException i) {
+            } catch (final IOException i) {
                 i.printStackTrace();
             }
         }
@@ -31,12 +31,12 @@ public class Logger {
         }
     }
 
-    private static String formatted(String msg) {
+    private static String formatted(final String msg) {
         return String.format("[%s] %s", getCurDateTime(), msg);
     }
 
     // not the best way to do it, but ok for simple stuff
-    public static void setLoggerOutput(boolean debugChange, boolean devOutputChange) {
+    public static void setLoggerOutput(final boolean debugChange, final boolean devOutputChange) {
         debug = debugChange;
         devOutput = devOutputChange;
     }

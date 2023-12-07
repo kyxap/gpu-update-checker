@@ -6,7 +6,7 @@ public class ConfigProps {
 
         private final String description;
 
-        LoggerSettings(String description) {
+        LoggerSettings(final String description) {
             this.description = description;
         }
 
@@ -20,7 +20,7 @@ public class ConfigProps {
 
         private final String description;
 
-        App(String description) {
+        App(final String description) {
             this.description = description;
         }
 
