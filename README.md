@@ -33,6 +33,7 @@ Simple and minimalistic java application which stays in your system tray and do 
 1) Application will check for updates on start and every hour
 1) Use right click to open context window for extra
 1) Consider to add it to auto start with your system
+1) Enjoy!
 
 <details>
 <summary>Click for screenshot with details on how to get uri</summary>
