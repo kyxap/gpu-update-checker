@@ -1,21 +1,22 @@
 package github.kyxap.com.utils;
 
-import static github.kyxap.com.gui.tray.DriverUpdateChecker.isNewUpdateAvailable;
-import static github.kyxap.com.gui.windows.PopUpWorker.popUpInfo;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static github.kyxap.com.gui.tray.DriverUpdateChecker.isNewUpdateAvailable;
+import static github.kyxap.com.gui.windows.PopUpWorker.popUpInfo;
+
 public class Scheduler {
-    private static int period = 60;
-    private static TimeUnit minutes = TimeUnit.MINUTES;
+    private static final int period = 60;
+    private static final TimeUnit minutes = TimeUnit.MINUTES;
+
     public static void scheduleVersionCheck() {
         // Create a scheduled executor service with a single thread
-        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
         // Define the task to be scheduled (replace with your actual task)
-        Runnable task = () -> {
+        final Runnable task = () -> {
             Logger.log("Scheduler executing started for every: " + period + " " + minutes.name().toLowerCase());
             // Replace the next line with the method you want to run
             if (isNewUpdateAvailable()) popUpInfo("New driver version update is available");
@@ -28,7 +29,7 @@ public class Scheduler {
         // For a simple console application, you can add a delay or use a loop to keep it running
         try {
             Thread.sleep(Long.MAX_VALUE);
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             e.printStackTrace();
         }
 

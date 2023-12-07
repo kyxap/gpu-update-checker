@@ -14,14 +14,13 @@ import java.util.Properties;
 public class AppConfig {
 
     private static final String PROPERTIES_FILE = "config.properties";
-//    private static final String PROPERTIES_FILE = AppConfig.class.getClassLoader().getResource("config.properties").getFile();
 
     private static final Properties properties = new Properties();
 
     public static void loadProperties() throws IOException {
-        try (InputStream input = new FileInputStream(PROPERTIES_FILE)) {
+        try (final InputStream input = new FileInputStream(PROPERTIES_FILE)) {
             properties.load(input);
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             // Handle the case when the file doesn't exist
             // You may want to create a default configuration here
             Logger.log("Default config does not exist, creating new one...");
@@ -30,7 +29,7 @@ public class AppConfig {
     }
 
     private static void checkForUpdates() throws IOException {
-        long lastModified = propertiesFileLastModified();
+        final long lastModified = propertiesFileLastModified();
         if (lastModified > 0 && lastModified > propertiesFileLastLoaded) {
             // Reload the properties if the file has been modified
             Logger.log("Reloading properties...");
@@ -41,7 +40,7 @@ public class AppConfig {
 
     private static long propertiesFileLastModified() {
 
-        File file = new File(PROPERTIES_FILE);
+        final File file = new File(PROPERTIES_FILE);
         return file.lastModified();
     }
 
@@ -59,19 +58,19 @@ public class AppConfig {
     }
 
     private static void saveProperties() {
-        try (OutputStream output = new FileOutputStream(PROPERTIES_FILE)) {
+        try (final OutputStream output = new FileOutputStream(PROPERTIES_FILE)) {
             properties.store(output, "Application Configuration");
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
 
     // Accessor methods for getting and setting properties
-    public static String getProperty(String key) {
+    public static String getProperty(final String key) {
         return properties.getProperty(key);
     }
 
-    public static void setProperty(String key, String value) {
+    public static void setProperty(final String key, final String value) {
         properties.setProperty(key, value);
         // Save the properties whenever a change is made
         saveProperties();
