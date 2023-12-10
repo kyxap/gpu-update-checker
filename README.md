@@ -1,5 +1,5 @@
 # gpu-update-checker
-GPU Update Checker, automatically checks if there are any new drivers available for your video card.
+GPU Update Checker, automatically checks if are any new drivers available for your video card.
 
 Simple and minimalistic java application which stays in your system tray and do the job.
 
