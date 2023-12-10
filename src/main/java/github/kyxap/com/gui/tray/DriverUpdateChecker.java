@@ -20,6 +20,8 @@ import java.net.URL;
 
 import static github.kyxap.com.config.AppConfig.getProperty;
 import static github.kyxap.com.config.AppConfig.loadProperties;
+import static github.kyxap.com.gui.windows.PopUpType.ABOUT;
+import static github.kyxap.com.gui.windows.PopUpType.INFO;
 import static github.kyxap.com.gui.windows.PopUpWorker.openAboutWindow;
 import static github.kyxap.com.gui.windows.PopUpWorker.popUpInfo;
 import static github.kyxap.com.utils.Scheduler.scheduleVersionCheck;
@@ -57,7 +59,7 @@ public class DriverUpdateChecker {
         } else {
             // TODO: make sure scheduler works without tray
             final String msg = "SystemTray is not supported on this platform, but scheduler is started";
-            popUpInfo(msg);
+            popUpInfo(INFO, msg);
             Logger.log(msg);
         }
         scheduleVersionCheck();
@@ -101,20 +103,20 @@ public class DriverUpdateChecker {
                 // Handle the "Check Driver Updates" action
                 Logger.log("Check Driver Updates clicked");
                 if (isNewUpdateAvailable()) {
-                    popUpInfo("New driver version updated is available");
+                    popUpInfo(INFO, "New driver version updated is available");
                 } else {
-                    popUpInfo("You are using latest version, no updates available");
+                    popUpInfo(INFO, "You are using latest version, no updates available");
                 }
             }
         });
         popupMenu.add(checkUpdatesItem);
 
         // Add "About" menu item
-        final MenuItem aboutItem = new MenuItem("About");
+        final MenuItem aboutItem = new MenuItem(ABOUT);
         aboutItem.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent e) {
                 // Handle the "About" action
-                Logger.log("About clicked");
+                Logger.log(ABOUT + " clicked");
                 openAboutWindow();
             }
         });
