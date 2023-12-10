@@ -5,6 +5,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static github.kyxap.com.gui.tray.DriverUpdateChecker.isNewUpdateAvailable;
+import static github.kyxap.com.gui.windows.PopUpType.INFO;
 import static github.kyxap.com.gui.windows.PopUpWorker.popUpInfo;
 
 public class Scheduler {
@@ -19,7 +20,7 @@ public class Scheduler {
         final Runnable task = () -> {
             Logger.log("Scheduler executing started for every: " + period + " " + minutes.name().toLowerCase());
             // Replace the next line with the method you want to run
-            if (isNewUpdateAvailable()) popUpInfo("New driver version update is available");
+            if (isNewUpdateAvailable()) popUpInfo(INFO, "New driver version update is available");
         };
 
         // Schedule the task to run every 60 minute with an initial delay of 0 seconds
